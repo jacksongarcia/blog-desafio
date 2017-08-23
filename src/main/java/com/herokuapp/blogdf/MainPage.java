@@ -7,9 +7,6 @@ public class MainPage implements Logic {
     public String executa(HttpServletRequest req, HttpServletResponse res) 
     		throws Exception {
 
-        System.out.println("Executando a logica ...");
-        
-        System.out.println("Retornando o nome da página JSP ...");
         return "teste.jsp";
 
     }
