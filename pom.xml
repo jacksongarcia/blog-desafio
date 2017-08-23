@@ -16,7 +16,6 @@
     </dependency>
   </dependencies>
   <build>
-  	<finalName>blogdesafio</finalName>
 	<plugins>
        <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
