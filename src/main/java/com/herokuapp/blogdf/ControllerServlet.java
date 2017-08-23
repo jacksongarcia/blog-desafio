@@ -32,7 +32,7 @@ public class ControllerServlet extends HttpServlet {
 
         } catch (Exception e) {
             throw new ServletException(
-              "A logica de negocios causou uma excecao", e);
+              "A lógica de negócios causou uma exceção", e);
         }
     }
 }
