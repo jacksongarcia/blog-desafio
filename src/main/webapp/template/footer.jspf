@@ -1,0 +1,7 @@
+	</div>
+
+	<script>
+	<%@ include file="../static/script.js" %>
+	</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<div class="ui sidebar inverted vertical labeled icon menu">
+  <a class="item">
+    <i class="file text outline icon"></i>
+    Novo Post
+  </a>
+</div>
