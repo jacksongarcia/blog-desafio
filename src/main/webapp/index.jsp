@@ -13,11 +13,8 @@
 		      <div class="meta">
 		        <span>${ post.preview_article }</span>
 		      </div>
-		      <div class="description">
-		        <p>Publicado em <fmt:formatDate value="${post.datePublication}" pattern="dd/MM/yyyy" /></p>
-		      </div>
 		      <div class="extra">
-		        Autor: ${ auth.name } ${ auth.lastName } - ${ auth.email }
+		        <p>Publicado em <fmt:formatDate value="${post.datePublication}" pattern="dd/MM/yyyy" /></p>
 		      </div>
 		    </div>
 		  </div>

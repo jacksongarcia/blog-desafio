@@ -82,4 +82,37 @@ public class PostDAO {
 		
 		return null;
 	}
+	
+	public Post getPost(String title) {
+		String sql = "SELECT * FROM post WHERE title = ?";
+		
+		Connection connection = ConnectionFactory.getConnection();
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+			
+			stmt.setString(1, title);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			Post post = null;
+			
+			if(rs.next()) {
+				post = new Post();
+				
+				post.setId(rs.getInt("id"));
+				post.setTitle(rs.getString("title"));
+				post.setPreview_article(rs.getString("preview_article"));
+				post.setArticle(rs.getString("article"));
+				post.setDatePublication(rs.getDate("date_publication"));
+				post.setUserId(rs.getInt("user_id"));
+			}
+			
+			return post;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }

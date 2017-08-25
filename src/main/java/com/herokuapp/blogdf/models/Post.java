@@ -3,12 +3,16 @@ package com.herokuapp.blogdf.models;
 import java.sql.Date;
 
 public class Post {
+	private int id;
 	private String title;
 	private String preview_article;
 	private String article;
 	private Date datePublication;
 	private int userId;
 	
+	public int getId(){
+		return id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -23,6 +27,9 @@ public class Post {
 	}
 	public int getUserId() {
 		return userId;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public void setTitle(String title) {
 		this.title = title;

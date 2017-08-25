@@ -53,10 +53,10 @@
         			Publicado em <fmt:formatDate value="${now}" pattern="dd/MM/yyyy" />
 		        </span>
 		      </div>
-		      <div class="description" id="preview-preview-article">
+		      <div class="extra" id="preview-preview-article">
 		        <p>Texto curto do artigo</p>
 		      </div>
-		      <div class="extra">
+		      <div class="description">
         		Autor: ${ auth.name } ${ auth.lastName } - ${ auth.email }
 		      </div>
 		    </div>

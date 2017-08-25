@@ -55,22 +55,51 @@ public class UserDAO {
 		String sql = "SELECT id FROM user " +
 				"WHERE email = ? AND password = ?";
 	
-	Connection connection = ConnectionFactory.getConnection();
-
-	try (PreparedStatement stmt = connection.prepareStatement(sql)){
-
-		stmt.setString(1, email);
-		stmt.setString(2, password);
-		
-		ResultSet rs = stmt.executeQuery();
-
-		return rs.first();
-		
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
+		Connection connection = ConnectionFactory.getConnection();
 	
-	return false;
+		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+	
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			
+			ResultSet rs = stmt.executeQuery();
+	
+			return rs.first();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
+	public User getUserById(int id) {
+		String sql = "SELECT * FROM user " +
+				"WHERE id = ?";
+	
+		Connection connection = ConnectionFactory.getConnection();
+	
+		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+	
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+	
+			User user = null;
+			
+			if(rs.next()) {
+				user = new User();
+				
+				user.setFirst_name(rs.getString("first_name"));
+				user.setLast_name(rs.getString("last_name"));
+				user.setEmail(rs.getString("email"));
+			}
+			
+			return user;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

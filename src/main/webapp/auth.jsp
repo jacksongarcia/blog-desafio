@@ -1,6 +1,8 @@
 
 <div class="ui two column centered grid">
   <div class="column">
+  <div class="ui very padded segment">
+  
     <div class="ui error message hidden" id="alert-error">
 	    <div class="header">Atenção</div><hr/>
 	    <div id="errors">
@@ -69,6 +71,7 @@
 			</div>
 		</form>
 	</div>
+  </div>
   </div>
 </div>
 
