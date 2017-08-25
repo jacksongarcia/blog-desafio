@@ -1,27 +1,29 @@
+<jsp:useBean id="posts" class="com.herokuapp.blogdf.controllers.PostController"/>
+
 <div class="ui grid">
   <div class="one wide column"></div>
   <div class="ten wide column">
 	<div class="ui divided items">
-	  <div class="item">
-	    <div class="content">
-	      <a class="header">Header</a>
-	      <div class="meta">
-	        <span>Description</span>
-	      </div>
-	      <div class="description">
-	        <p>fadfadfadf</p>
-	      </div>
-	      <div class="extra">
-	        Additional Details
-	      </div>
-	    </div>
-	  </div>
-	  <div class="item">
+	
+	  <c:forEach var="post" items="${posts.listPost}">
+	
+		  <div class="item">
+		    <div class="content">
+		      <a class="header" href="post?article=${post.title}">${post.title}</a>
+		      <div class="meta">
+		        <span>${ post.preview_article }</span>
+		      </div>
+		      <div class="description">
+		        <p>Publicado em <fmt:formatDate value="${post.datePublication}" pattern="dd/MM/yyyy" /></p>
+		      </div>
+		      <div class="extra">
+		        Autor: ${ auth.name } ${ auth.lastName } - ${ auth.email }
+		      </div>
+		    </div>
+		  </div>
+		  
+  	</c:forEach>
 
-	  </div>
-	  <div class="item">
-
-	  </div>
 	</div>
   </div>
   <div class="four wide column"></div>

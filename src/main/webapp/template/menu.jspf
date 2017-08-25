@@ -1,27 +1,25 @@
-<c:if test="${ page eq null }"> 
 <div class="pusher">
 	<div class="ui menu">
 		<c:choose>
 			<c:when test="${ auth.admin }">
-		       <a class="item" id="setting-admin">
-			    <i class="setting icon"></i>
-			  </a>
-		    </c:when>
-		</c:choose>
-	  <a class="item" href="index">Inicio</a>
-	  <div class="right menu">
-	  	<c:choose>
-			<c:when test="${ auth.loged }">
-				<a class="item" style="padding-top: 0; padding-bottom:0">
-					<img class="ui avatar image" src="static/img/square-image.png">
-					<span>${ auth.name }</span>
-				</a>
-	    		<a class="item" href="logout?action=logout">Sair</a>
-	    	</c:when>
-	    	<c:otherwise>
-		    	<a class="item" href="login">Entrar</a>
-		    </c:otherwise>
-		</c:choose>
-	  </div>
-	</div>
- </c:if>
+	       <a class="item" id="setting-admin">
+		    <i class="setting icon"></i>
+		  </a>
+	    </c:when>
+	</c:choose>
+  <a class="item" href="index">Inicio</a>
+  <div class="right menu">
+  	<c:choose>
+		<c:when test="${ auth.loged }">
+			<div class="item" style="padding-top: 0; padding-bottom:0">
+				<img class="ui avatar image" src="static/img/square-image.png">
+				<span>${ auth.name } ${ auth.lastName }</span>
+			</div>
+    		<a class="item" href="logout?action=logout">Sair</a>
+    	</c:when>
+    	<c:otherwise>
+	    	<a class="item" href="login">Entrar</a>
+	    </c:otherwise>
+	</c:choose>
+  </div>
+</div>

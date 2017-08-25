@@ -1,5 +1,5 @@
 <div class="ui sidebar inverted vertical labeled icon menu">
-  <a class="item">
+  <a class="item" href="new-post">
     <i class="file text outline icon"></i>
     Novo Post
   </a>

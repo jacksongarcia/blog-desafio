@@ -71,3 +71,8 @@
 	</div>
   </div>
 </div>
+
+<script>
+	<c:import url="static/scriptAuth.js" />
+</script>
+

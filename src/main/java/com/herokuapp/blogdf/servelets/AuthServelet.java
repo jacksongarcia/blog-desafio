@@ -15,27 +15,29 @@ import com.herokuapp.blogdf.controllers.AuthController;
 import com.herokuapp.blogdf.models.UserSession;
 
 @WebServlet(name="AuthServelet", urlPatterns = {"/auth", "/logout", "/login"}) 
-public class AuthServelet extends HttpServlet  {
+public class AuthServelet extends HttpServlet {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
-		UserSession userSession = (UserSession)session.getAttribute("auth");
+		HttpSession session = request.getSession(false);
+		
+		UserSession userSession = null;
+		if (session != null)
+			userSession = (UserSession)session.getAttribute("auth");
 		
 		AuthController auth = new AuthController();
 
 		try {
-			auth.logout(request, session);
+			if (auth.logout(request, session))
+				userSession = null;
 
 			if (userSession != null && userSession.isLoged()) {
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			}
 			else {
-				session.invalidate();
-				request.setAttribute("page", "auth");
 				request.getRequestDispatcher("auth.jsp").forward(request, response);
 			}
 			
@@ -52,10 +54,18 @@ public class AuthServelet extends HttpServlet  {
 			 try {
 				 if (request.getParameter("type").equals("register")) {
 					JSONObject json = auth.registerUser(request, response);
+					
+					if(json.has("erro") == false)
+						json.put("url", getURL(request));
+					
 					response.getWriter().print(json);
 				 }
 				 else if (request.getParameter("type").equals("login")) {
 					 JSONObject json = auth.loginUser(request, response);
+					 
+					if(json.has("erro") == false)
+						json.put("url", getURL(request));
+					
 					 response.getWriter().print(json);
 				 }
 			} catch (IOException e) {
@@ -65,6 +75,13 @@ public class AuthServelet extends HttpServlet  {
 
 	 }
 	 	 
+	private String getURL(HttpServletRequest request) {
+		String url = request.getRequestURL().substring(0, 
+				 request.getRequestURL().indexOf(request.getServletPath())
+				 );
+		
+		return url;
+	}
 
 
 }

@@ -1,7 +1,6 @@
 	</div>
-
-	<script>
-	<%@ include file="../static/script.js" %>
-	</script>
+<script>
+	<c:import url="static/main.js" />
+</script>
 </body>
 </html>

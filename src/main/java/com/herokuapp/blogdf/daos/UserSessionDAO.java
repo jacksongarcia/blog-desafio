@@ -9,7 +9,7 @@ import com.herokuapp.blogdf.models.UserSession;
 
 public class UserSessionDAO {
 	public UserSession getUser(String email) {
-		String sql = "SELECT first_name, email, admin FROM user " +
+		String sql = "SELECT id, first_name, last_name, email, admin FROM user " +
 					"WHERE email = ?";
 		
 		Connection connection = ConnectionFactory.getConnection();
@@ -22,7 +22,9 @@ public class UserSessionDAO {
 			
 			UserSession userSession = new UserSession();
 			if(rs.first()) {
+				userSession.setId(rs.getInt("id"));
 				userSession.setName(rs.getString("first_name"));
+				userSession.setLastName(rs.getString("last_name"));
 				userSession.setEmail(rs.getString("email"));
 				userSession.setAdmin(rs.getBoolean("admin"));
 				

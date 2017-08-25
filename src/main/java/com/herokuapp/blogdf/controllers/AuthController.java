@@ -18,10 +18,11 @@ import com.herokuapp.blogdf.models.UserSession;
 public class AuthController {
 
 	public boolean logout(HttpServletRequest request, HttpSession session) {
-		if (request != null && request.getParameter("action") != null) {
+		if (request != null && request.getParameter("action") != null && 
+				session.getAttribute("auth") != null) {
 			if (request.getParameter("action").equals("logout")) {
 				session.removeAttribute("auth");
-				
+				session.invalidate();
 				return true;
 			}
 		}
@@ -37,7 +38,7 @@ public class AuthController {
 		JSONObject json = new JSONObject();
 		 
 		json = emailValidation(user, json);
-		json = validatePasswordEmail(user, json);
+		json = validateEmail(user, json);
 		json = passwordValidation(user, json);
 		json = passwordIsValidateAccount(user, json);
 		 
@@ -51,8 +52,6 @@ public class AuthController {
 			 
 		} else {
 			json.put("seccess", true);
-
-			json.put("url", getURL(request));
 			 
 			HttpSession session = request.getSession();
 			 
@@ -88,8 +87,6 @@ public class AuthController {
 			 
 		} else {
 			json.put("seccess", true);
-
-			json.put("url", getURL(request));
 			 
 			String encryptPassword = getEncryptPassword(user.getPassword());
 			 
@@ -216,15 +213,6 @@ public class AuthController {
 		return null;
 	}
 
-	private String getURL(HttpServletRequest request) {
-		String url = request.getRequestURL().substring(0, 
-				 request.getRequestURL().indexOf(request.getServletPath())
-				 );
-		
-		return url;
-	}
-
-
 	private JSONObject passwordIsValidateAccount(User user, JSONObject jsonError) {
 		if (user.getEmail() != null && user.getPassword() != null) {
 			String encryptPassword = getEncryptPassword(user.getPassword());
@@ -236,7 +224,7 @@ public class AuthController {
 		return jsonError;
 	}
 		
-	private JSONObject validatePasswordEmail(User user, JSONObject jsonError) {
+	private JSONObject validateEmail(User user, JSONObject jsonError) {
 		if (user.getEmail().equals("") == false) {
 			UserDAO userDAO = new UserDAO();
 			boolean emailValidate = userDAO.hasEmail(user.getEmail());
