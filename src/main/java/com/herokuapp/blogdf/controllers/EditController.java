@@ -109,7 +109,11 @@ public class EditController {
 	private Post insertAttibutesInPost() {
 		Post post = new Post();
 		
-		post.setTitle(request.getParameter("title"));
+		String title = null;
+		if (request.getParameter("title") != null)
+			title = request.getParameter("title").replaceAll("\\:*\\.*\\/\\\"\\'", "");
+		
+		post.setTitle(title);
 		post.setPreview_article(request.getParameter("preview_article"));
 		post.setArticle(request.getParameter("article"));
 		
