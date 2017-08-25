@@ -246,6 +246,7 @@ public class AuthController {
 				}
 			} catch (SQLException e) {
 				jsonError.put("email", "Tivemos uma falha ao procurar seu email no nosso registro, tente mais tarde");
+				e.printStackTrace();
 			}
 		}
 
