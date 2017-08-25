@@ -23,7 +23,7 @@
 		  </div>
 		  
 		  	<div class="ui buttons">
-			  	<button class="fluid ui button" id="button-register">Registrar</button>
+			  	<button class="fluid ui button" id="button-register">Cadastrar</button>
 			  	<div class="or"></div>
 			  	<button class="fluid ui positive button" id="submit-login">Entrar</button>
 			</div>
@@ -32,7 +32,7 @@
 	
 	 <div class="ui form transition hidden" id="form-register">
 		<form class="ui form" id="loading-form-register">
-			<h4 class="ui dividing header">Registrar</h4>
+			<h4 class="ui dividing header">Cadastrar</h4>
 		
 			<div class="field">
 	    		<label>Nome</label>

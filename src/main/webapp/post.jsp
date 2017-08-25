@@ -29,12 +29,13 @@
 	  ${ requestScope.post.article }
 	</div>
 	
+	Artigo #<span id="id_post">${ post.id }</span>
+	
 	<div class="ui blue segment" style="margin-top: 30px">
 		<a class="avatar">
 	      <img class="ui avatar image tiny" src="static/img/square-image.png">
 	    </a>
 	    Autor: ${ requestScope.user.first_name }  ${ requestScope.user.last_name } -  ${ requestScope.user.email }
-		 - #<span id="id_post">${ post.id }</span>
 	</div>
 	
 	<div class="ui comments">
@@ -43,7 +44,6 @@
 	  <div id="container-comments">
 
 	  </div>
-	  
 	  
 	  <c:choose>
 		  <c:when test="${ auth.logged }">

@@ -68,6 +68,8 @@ public class CommentController {
 			} catch (SQLException e) {
 				json.put("erro", true);
 				json.put("falha", "Tivemos um problem ao inserir seu comentario tente mais tarde.");
+			
+				return json;
 			}
 			
 			json.put("seccess", true);

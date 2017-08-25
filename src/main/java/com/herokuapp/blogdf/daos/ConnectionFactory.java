@@ -16,10 +16,10 @@ public class ConnectionFactory {
     		connection = DriverManager.getConnection(
     		          "jdbc:mysql://mysql796.umbler.com:41890/db_blogdesafio?useTimezone=true&serverTimezone=UTC", 
     		          "user_blogdesafio", "blogdesafio");
-//        		
-//        		connection = DriverManager.getConnection(
-//      		          "jdbc:mysql://localhost:3307/db_blogdesafio?useTimezone=true&serverTimezone=UTC", 
-//      		          "root", "usbw");  
+        		
+//    		connection = DriverManager.getConnection(
+//  		          "jdbc:mysql://localhost:3307/db_blogdesafio?useTimezone=true&serverTimezone=UTC", 
+//  		          "root", "usbw");  
     	}
     		
     	return connection;

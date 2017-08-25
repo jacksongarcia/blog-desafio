@@ -66,6 +66,8 @@ public class EditController {
 			} catch (SQLException e) {
 				json.put("erro", true);
 				json.put("falha", "Erro inesperado");
+				
+				return json;
 			}
 			
 			json.put("seccess", true);
