@@ -1,15 +1,15 @@
 package com.herokuapp.blogdf.models;
 
 public class UserSession {
-	private boolean loged;
+	private boolean logged;
 	private int id;
 	private String name;
 	private String lastName;
 	private String email;
 	private boolean admin;
 	
-	public boolean isLoged() {
-		return loged;
+	public boolean isLogged() {
+		return logged;
 	}
 	public int getId() {
 		return id;
@@ -28,8 +28,8 @@ public class UserSession {
 		return admin;
 	}
 	
-	public void setLoged(boolean loged) {
-		this.loged = loged;
+	public void setLogged(boolean logged) {
+		this.logged = logged;
 	}
 	public void setId(int id) {
 		this.id = id;

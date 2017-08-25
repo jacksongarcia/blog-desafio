@@ -17,7 +17,7 @@ public class ConnectionFactory {
         		connection = DriverManager.getConnection(
         		          "jdbc:mysql://mysql796.umbler.com:41890/db_blogdesafio?useTimezone=true&serverTimezone=UTC", 
         		          "user_blogdesafio", "blogdesafio");
-        		
+//        		
 //        		connection = DriverManager.getConnection(
 //      		          "jdbc:mysql://localhost:3307/db_blogdesafio?useTimezone=true&serverTimezone=UTC", 
 //      		          "root", "usbw");  
@@ -26,12 +26,6 @@ public class ConnectionFactory {
         	return connection;
         	
         } catch (SQLException e) {
-				try {
-					if (connection != null)
-						connection.close();
-				} catch (SQLException e1) {
-		            throw new RuntimeException(e1);
-				}
             throw new RuntimeException(e);
         }
     }

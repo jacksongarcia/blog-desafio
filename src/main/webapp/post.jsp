@@ -1,12 +1,13 @@
-<div class="ui massive active text loader transition hidden" id="load">Publicando comentário...</div>
+<div class="ui massive active loader transition hidden" id="load"></div>
 
 <div class="ui mini modal" id="modal">
-  <div class="header" id="modal-header"></div>
+  <div class="header" id="modal-header">Deletar</div>
   <div class="content" id="modal-content">
-
+	Deseja realmente deletar esse artigo?
   </div>
   <div class="actions">
-    <div class="ui positive button">OK</div>
+  	<div class="ui positive button">Não</div>
+    <div class="ui deny red button">Sim</div>
   </div>
 </div>
 
@@ -14,6 +15,14 @@
   <div class="one wide column"></div>
   <div class="ten wide column">
   
+	<c:if test="${ auth.admin }">
+	    <div class="ui clearing basic segment">
+			<button class="ui right floated button red" onclick="deletePost(${ post.id })">Deletar</button>
+		 	<button class="ui right floated button orange disabled"">Editar</button>
+		 
+		 </div>
+	 </c:if>
+	 
 	<div class="ui piled segment">
 	  <h4 class="ui header">${ requestScope.post.title }</h4>
 	  
@@ -37,7 +46,7 @@
 	  
 	  
 	  <c:choose>
-		  <c:when test="${ auth.loged }">
+		  <c:when test="${ auth.logged }">
 			  <form class="ui reply form">
 			    <div class="field">
 			      <textarea id="input-comment"></textarea>
@@ -56,7 +65,13 @@
 	
   </div>
   
-  <div class="four wide column"></div>
+  <div class="four wide column">
+  	<div class="ui segment">
+	  <h2 class="ui right floated header">Em desenvolvimento</h2>
+	  <div class="ui clearing divider"></div>
+	  <p>categorias</p>
+	</div>
+  </div>
   <div class="one wide column"></div>
 </div>
 

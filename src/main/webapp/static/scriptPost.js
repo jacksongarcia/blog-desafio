@@ -1,27 +1,17 @@
+messageModal = function(title, text) {
+	$('#modal-erro-header').html(title);
+
+	$('#modal-erro-content').html(text);
+			
+	$('#modal-erro')
+	  .modal('show');
+};
+
 $(function(){
 	$('#buttom-send-comment').click(function(){
 		publishComment();
 	});
-	
-	var messageModal = function(title, text) {
-		$('#modal-header').html(title);
 
-		$('#modal-content').html(text);
-				
-		$('#modal')
-		  .modal('show');
-	};
-	
-	var loadVisualization = function() {
-		$('#grid-edit')
-		  .transition('scale');
-		
-		setTimeout(function() {
-			$('#load')
-			  .transition('scale');	
-		}, 300);
-	};
-	
 	var getComment = function(response) {
 		var textComment = '<div class="comment">'+
 	    '<a class="avatar">'+
@@ -44,8 +34,6 @@ $(function(){
 	publishComment = function() {
 		var comment = $('#input-comment').val();
 		var id = $('#id_post').text();
-
-		loadVisualization();
 		
 		$.post('post',
 				{
@@ -65,21 +53,20 @@ $(function(){
 						}
 						
 						text += '</div>';
-													
+												
 						messageModal('Falha', text);
 						
 					} else if (response.seccess === true) {
 						$('#container-comments').append(getComment(response));
 						$('#input-comment').val('');
 					}
-					
-					loadVisualization();
 				}
 			);
 	};
 
 });
 
+// ------ Pega os comentarios em de load da pagina
 $(function(){
 	var getComment = function(response) {
 		var textComment = '<div class="comment">'+
@@ -120,3 +107,60 @@ $(function(){
 	
 	listComment();
 });
+
+// ---- deleta post
+gridAndLoadVisualization = function() {
+	$('.ui.grid')
+	  .transition('scale');
+	
+	setTimeout(function() {
+		$('#load')
+		  .transition('scale');	
+	}, 300);
+};
+
+deletePostRequest = function(id) {
+
+	gridAndLoadVisualization();
+	
+	$.post('edit',
+			{
+				type : 'delete',
+				id : id
+			},
+			function(response) {
+
+				if (response.erro == true) {
+					var text = '<div class="ui error message">';
+					for (key in response) {
+						if (key !== 'erro') {
+							$('#field-'+key).addClass('error');
+							text += '<p>'+response[key]+'</p>';
+						}
+					}
+					
+					text += '</div>';
+												
+					messageModal('Erro inesperado', text);
+					
+				} else if (response.seccess === true) {
+    				$(location).attr('href', response.url+'/index');
+				}
+				
+				gridAndLoadVisualization();
+			}
+		);
+};
+
+deletePost = function(id) {
+	$('#modal')
+	  .modal({
+	    closable  : false,
+	    onDeny    : function(){
+	    	deletePostRequest(id);
+	    },
+	    onApprove : function() {}
+	  })
+	  .modal('show');	
+
+};

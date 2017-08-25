@@ -10,6 +10,7 @@
 		  <div class="item">
 		    <div class="content">
 		      <a class="header" href="post?article=${post.title}">${post.title}</a>
+
 		      <div class="meta">
 		        <span>${ post.preview_article }</span>
 		      </div>
@@ -23,7 +24,13 @@
 
 	</div>
   </div>
-  <div class="four wide column"></div>
+  <div class="four wide column">
+    <div class="ui segment">
+	  <h2 class="ui right floated header">Em desenvolvimento</h2>
+	  <div class="ui clearing divider"></div>
+	  <p>categorias</p>
+	</div>
+  </div>
   <div class="one wide column"></div>
   
 </div>

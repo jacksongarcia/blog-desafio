@@ -11,7 +11,7 @@ $(function() {
         })
 	.froalaEditor(
 	{
-		height: $(window).height() - 210
+		height: $(window).height() - 195
 	 });
 	
 	gridEditAndLoadVisualization = function() {
@@ -92,11 +92,11 @@ $(function(){
 		$('#buttom-'+show).addClass('active disabled');
 		
 		$('#segment-'+hiden)
-		  .transition('fade down');
+		  .transition('scale');
 		
 		setTimeout(function() {
 			$('#segment-'+show)
-			  .transition('fade down');	
+			  .transition('scale');	
 		}, 300);
 
 	};

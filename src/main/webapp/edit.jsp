@@ -16,9 +16,9 @@
   </div>
 </div>
 
-<div class="ui grid" id="grid-edit">
+<div class="ui grid" id="grid-edit" style="margin-left:1px; margin-right:1px">
   <div class="twelve wide stretched column">
-    <div class="ui segment" id="segment-editor">
+    <div class="ui basic segment" id="segment-editor">
   		<textarea id="edit-texarea"></textarea>
     </div>
     
@@ -84,7 +84,7 @@
 		  	Publicar
 		  </button>
 		  <div class="ui divider"></div>
-		  <button class="fluid ui red button">
+		  <button class="fluid ui red button disabled">
 		  	<i class="icon trash outline"></i>
 		  	Excluir
 		  </button>

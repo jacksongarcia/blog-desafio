@@ -65,6 +65,7 @@ public class PostDAO {
 			
 			while(rs.next()) {
 				Post post = new Post();
+				post.setId(rs.getInt("id"));
 				post.setTitle(rs.getString("title"));
 				post.setPreview_article(rs.getString("preview_article"));
 				post.setArticle(rs.getString("article"));
@@ -114,5 +115,46 @@ public class PostDAO {
 		}
 		
 		return null;
+	}
+	
+	public boolean deleteById(int id) {
+		String sql = "DELETE FROM post WHERE id = ? ";
+		
+		Connection connection = ConnectionFactory.getConnection();
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+
+			stmt.setInt(1, id);
+			
+			int rs = stmt.executeUpdate();
+
+			return rs > 0;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
+	public boolean deleteByIdWithComment(int id) {
+		String sql = "DELETE post, comment FROM post "+
+				  "INNER JOIN comment ON post.id = ? AND comment.post_id = post.id";
+		
+		Connection connection = ConnectionFactory.getConnection();
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+
+			stmt.setInt(1, id);
+			
+			int rs = stmt.executeUpdate();
+
+			return rs > 0;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 }
