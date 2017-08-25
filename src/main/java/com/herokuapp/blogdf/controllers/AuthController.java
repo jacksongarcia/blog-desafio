@@ -59,6 +59,9 @@ public class AuthController {
 		HttpSession session = request.getSession();
 		if (session == null) return false;
 		
+		if (session.getAttribute(attributeNameSession) == null)
+			return false;
+		
 		session.removeAttribute(attributeNameSession);
 		session.invalidate();
 	
@@ -71,7 +74,7 @@ public class AuthController {
 	 * @return boolean
 	 */
 	public UserSession userLogged() {
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		
 		if (session == null) return null;
 		
