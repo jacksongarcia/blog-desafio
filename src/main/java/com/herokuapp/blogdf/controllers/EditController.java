@@ -65,7 +65,7 @@ public class EditController {
 				postDAO.insert(post);
 			} catch (SQLException e) {
 				json.put("erro", true);
-				json.put("falha", "Erro inesperado");
+				json.put("falha", "Erro inesperado ao inserir artigo, tente mais tarde");
 				
 				return json;
 			}
