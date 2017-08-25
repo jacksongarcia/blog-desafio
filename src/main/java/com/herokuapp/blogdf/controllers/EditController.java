@@ -1,5 +1,6 @@
 package com.herokuapp.blogdf.controllers;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,11 +58,17 @@ public class EditController {
 			return json;
 			 
 		} else {
-			json.put("seccess", true);
 			 			 			 
 			PostDAO postDAO = new PostDAO();
 			 
-			postDAO.insert(post);
+			try {
+				postDAO.insert(post);
+			} catch (SQLException e) {
+				json.put("erro", true);
+				json.put("falha", "Erro inesperado");
+			}
+			
+			json.put("seccess", true);
 			return json;
 		} 
 	}

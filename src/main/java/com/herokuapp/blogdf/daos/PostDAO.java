@@ -10,32 +10,34 @@ import java.util.List;
 import com.herokuapp.blogdf.models.Post;
 
 public class PostDAO {
-	public void insert(Post post) {
+	public boolean insert(Post post) throws SQLException {
 		String sql = "INSERT INTO post " +
 					"(title, preview_article, article, date_publication, user_id) " +
 					"VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = ConnectionFactory.getConnection();
 
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1, post.getTitle());
-			stmt.setString(2, post.getPreview_article());
-			stmt.setString(3, post.getArticle());
-			stmt.setDate(4, post.getDatePublication());
-			stmt.setInt(5, post.getUserId());
-			
-			stmt.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		stmt.setString(1, post.getTitle());
+		stmt.setString(2, post.getPreview_article());
+		stmt.setString(3, post.getArticle());
+		stmt.setDate(4, post.getDatePublication());
+		stmt.setInt(5, post.getUserId());
+		
+		return stmt.execute();
 	}
 	
 	public boolean hasTitle(String title) {
 		String sql = "SELECT id FROM post " +
 					"WHERE title = ?";
 		
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection;
+		try {
+			connection = ConnectionFactory.getConnection();
+		} catch (SQLException e1) {
+			return false;
+		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)){
 
@@ -55,7 +57,12 @@ public class PostDAO {
 	public List<Post> getListPost() {
 		String sql = "SELECT * FROM post ORDER BY id DESC LIMIT 10";
 		
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+		} catch (SQLException e1) {
+			return null;
+		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)){
 			
@@ -87,7 +94,12 @@ public class PostDAO {
 	public Post getPost(String title) {
 		String sql = "SELECT * FROM post WHERE title = ?";
 		
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection;
+		try {
+			connection = ConnectionFactory.getConnection();
+		} catch (SQLException e1) {
+			return null;
+		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)){
 			
@@ -120,7 +132,12 @@ public class PostDAO {
 	public boolean deleteById(int id) {
 		String sql = "DELETE FROM post WHERE id = ? ";
 		
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection;
+		try {
+			connection = ConnectionFactory.getConnection();
+		} catch (SQLException e1) {
+			return false;
+		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)){
 
@@ -141,7 +158,12 @@ public class PostDAO {
 		String sql = "DELETE post, comment FROM post "+
 				  "INNER JOIN comment ON post.id = ? AND comment.post_id = post.id";
 		
-		Connection connection = ConnectionFactory.getConnection();
+		Connection connection = null;
+		try {
+			connection = ConnectionFactory.getConnection();
+		} catch (SQLException e1) {
+			return false;
+		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)){
 
