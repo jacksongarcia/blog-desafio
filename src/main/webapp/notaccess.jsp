@@ -4,7 +4,7 @@
 	    <h2 class="ui center aligned icon header">
 		  <i class="circular warning sign icon"></i>
 		   <div class="content">
-		    Você não tem acesso
+		    Você não tem permissão
 		    <div class="sub header"><a href="index">Ir para a pagina inicial</a></div>
 		  </div>
 		</h2>

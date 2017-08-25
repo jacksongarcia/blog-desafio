@@ -28,9 +28,8 @@ public class PostDAO {
 		return stmt.execute();
 	}
 	
-	public boolean hasTitle(String title) {
-		String sql = "SELECT id FROM post " +
-					"WHERE title = ?";
+	public boolean hasTitle(String title) throws SQLException {
+		String sql = "SELECT id FROM post WHERE title = ?";
 		
 		Connection connection;
 		try {
@@ -39,19 +38,13 @@ public class PostDAO {
 			return false;
 		}
 
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
+		PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1, title);
-			
-			ResultSet rs = stmt.executeQuery();
-
-			return rs.first();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		stmt.setString(1, title);
+		ResultSet rs = stmt.executeQuery();
 		
-		return false;
+		return rs.first();
+			
 	}
 	
 	public List<Post> getListPost() {

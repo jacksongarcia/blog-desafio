@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div class="ui grid" id="grid-edit" style="margin-left:1px; margin-right:1px">
+<div class="ui grid" id="grid-edit">
   <div class="twelve wide stretched column">
     <div class="ui basic segment" id="segment-editor">
   		<textarea id="edit-texarea"></textarea>

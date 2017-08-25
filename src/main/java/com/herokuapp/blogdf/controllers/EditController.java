@@ -155,8 +155,13 @@ public class EditController {
 	
 	private JSONObject titleIsValidateExist(Post post, JSONObject jsonError) {
 		if (post.getTitle() != null) {
-			if (new PostDAO().hasTitle(post.getTitle())) {
-				jsonError.put("title", "Titulo já cadastrado");
+			try {
+				if (new PostDAO().hasTitle(post.getTitle())) {
+					jsonError.put("title", "Titulo já cadastrado");
+				}
+			} catch (SQLException e) {
+				jsonError.put("title", "Error inesperado na validação do titulo");
+				e.printStackTrace();
 			}
 		}
 
