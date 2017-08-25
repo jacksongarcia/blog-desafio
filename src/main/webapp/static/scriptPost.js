@@ -142,12 +142,11 @@ deletePostRequest = function(id) {
 					text += '</div>';
 												
 					messageModal('Erro inesperado', text);
+					gridAndLoadVisualization();
 					
 				} else if (response.seccess === true) {
     				$(location).attr('href', response.url+'/index');
 				}
-				
-				gridAndLoadVisualization();
 			}
 		);
 };

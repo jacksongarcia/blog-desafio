@@ -111,7 +111,7 @@ public class EditController {
 		
 		String title = null;
 		if (request.getParameter("title") != null)
-			title = request.getParameter("title").replaceAll("\\:*\\.*\\/\\\"\\'", "");
+			title = request.getParameter("title").replaceAll("\\:*\\.*\\\"*\\\'*\\/*\\\\*", "");
 		
 		post.setTitle(title);
 		post.setPreview_article(request.getParameter("preview_article"));
@@ -165,7 +165,6 @@ public class EditController {
 				}
 			} catch (SQLException e) {
 				jsonError.put("title", "Error inesperado na validação do titulo");
-				e.printStackTrace();
 			}
 		}
 
