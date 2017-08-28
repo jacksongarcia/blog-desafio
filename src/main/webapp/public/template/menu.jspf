@@ -1,0 +1,34 @@
+<div class="pusher">
+	<div class="ui menu inverted blue" style="border-radius:0">
+	
+		<c:choose>
+			<c:when test="${ auth.admin }">
+		       <a class="item" id="setting-admin">
+			    <i class="setting icon"></i>
+			  </a>
+		    </c:when>
+		</c:choose>
+		
+		<a class="item" href="index">Inicio</a>
+	  
+		<div class="right menu">
+				  
+			<c:choose>
+				<c:when test="${ not empty auth }">
+					<div class="item" style="padding-top: 0; padding-bottom:0">
+						<!-- <img class="ui avatar image" src="static/img/square-image.png"> -->
+						<span>${ auth.first_name } ${ auth.last_name }</span>
+					</div>
+			    	<a class="item active" href="auth?ACTION=logout">Sair</a>
+			    </c:when>
+			    <c:otherwise>
+				    <a class="item active" href="auth">Entrar</a>
+				</c:otherwise>
+			</c:choose>
+			
+		</div>
+  
+	</div>
+	
+<div class="ui massive active text loader transition hidden" id="load"></div>
+	

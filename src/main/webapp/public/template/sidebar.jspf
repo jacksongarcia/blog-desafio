@@ -1,0 +1,6 @@
+<div class="ui sidebar vertical labeled icon menu">
+  <a class="item" href="edit">
+    <i class="file text outline icon"></i>
+    Novo Arigo
+  </a>
+</div>

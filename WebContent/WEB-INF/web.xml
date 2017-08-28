@@ -2,27 +2,27 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>blogdesafio</display-name>
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>/public/index.jsp</welcome-file>
   </welcome-file-list>
   
   <jsp-config>
     <jsp-property-group>
         <description>Configuracao do header, menu e footer do template</description>
         <url-pattern>*.jsp</url-pattern>
-        <include-prelude>template/header.jspf</include-prelude>
-        <include-prelude>template/sidebar.jspf</include-prelude>
-        <include-prelude>template/menu.jspf</include-prelude>
-        <include-coda>template/footer.jspf</include-coda>
+        <include-prelude>/public/template/header.jspf</include-prelude>
+        <include-prelude>/public/template/sidebar.jspf</include-prelude>
+        <include-prelude>/public/template/menu.jspf</include-prelude>
+        <include-coda>/public/template/footer.jspf</include-coda>
     </jsp-property-group>
   </jsp-config>
   
   <error-page>
 	  <error-code>404</error-code>
-	  <location>/404.jsp</location>
+	  <location>/public/erro/404.jsp</location>
 	</error-page>
 	
 	<error-page>
 	  <exception-type>java.lang.Exception</exception-type>
-	  <location>/erro.jsp</location>
+	  <location>/public/erro/erro.jsp</location>
 	</error-page>
 </web-app>

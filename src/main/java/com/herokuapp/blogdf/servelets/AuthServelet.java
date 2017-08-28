@@ -8,12 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.JSONObject;
-
 import com.herokuapp.blogdf.controllers.AuthController;
-import com.herokuapp.blogdf.controllers.Helpers;
 
-@WebServlet(name="AuthServelet", urlPatterns = {"/auth", "/logout", "/login"}) 
+@WebServlet(urlPatterns={"/auth", "/login", "/logout"}) 
 public class AuthServelet extends HttpServlet {
 	/**
 	 * 
@@ -22,7 +19,7 @@ public class AuthServelet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 			try {
-				request.getRequestDispatcher("auth.jsp").forward(request, response);
+				 request.getRequestDispatcher("public/auth.jsp").forward(request, response);
 				
 			} catch (ServletException e) {
 				// TODO Auto-generated catch block
@@ -33,25 +30,22 @@ public class AuthServelet extends HttpServlet {
 			}
 	}
 	
-	 protected void doPost(HttpServletRequest request, HttpServletResponse response) {		 
-		 JSONObject jsonOfResponse = null;
-		 
-		 if (new Helpers().isParamanterInUrl(request, "type", "register")) 
-			 jsonOfResponse = new AuthController(request, response, "auth").registerUser();
-		 
-		 if (new Helpers().isParamanterInUrl(request, "type", "login")) 
-			 jsonOfResponse = new AuthController(request, response, "auth").logIn();
-		 
-		 if(jsonOfResponse.has("erro") == false)
-			 jsonOfResponse.put("url", new Helpers().getURL(request));
-		 
+	 protected void doPost(HttpServletRequest request, HttpServletResponse response) {		 	 		 
+		 response.setContentType("application/json");   
+		 response.setCharacterEncoding("UTF-8");
+		
 		 try {
-			response.getWriter().print(jsonOfResponse);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			 // Register
+			 if (new AuthController().isURLRegister(request))
+				 response.getWriter().print(new AuthController().register(request));
+			 
+			 // Login
+			 else if (new AuthController().isURLLogin(request))
+				 response.getWriter().print(new AuthController().login(request));
 
+		 } catch (IOException e) {
+			 e.printStackTrace();
+		 }
 	 }
 
 }

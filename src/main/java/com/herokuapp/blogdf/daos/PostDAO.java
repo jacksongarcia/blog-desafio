@@ -4,19 +4,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import com.herokuapp.blogdf.models.Post;
+import com.herokuapp.blogdf.models.User;
 
 public class PostDAO {
-	public boolean insert(Post post) throws SQLException {
+		
+	public boolean insert(Post post, Connection connection) throws SQLException {
 		String sql = "INSERT INTO post " +
 					"(title, preview_article, article, date_publication, user_id) " +
 					"VALUES (?, ?, ?, ?, ?)";
 		
-		Connection connection = ConnectionFactory.getConnection();
-
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
 		stmt.setString(1, post.getTitle());
@@ -28,148 +28,127 @@ public class PostDAO {
 		return stmt.execute();
 	}
 	
-	public boolean hasTitle(String title) throws SQLException {
-		String sql = "SELECT id FROM post WHERE title = ?";
+	public boolean edit(int postId, Post post, Connection connection) throws SQLException {
+		String sql = "UPDATE post " +
+				"SET title = ?, preview_article = ?, article = ?, date_publication = ?, user_id = ? "+
+				"WHERE id = ? ";
+	
+		PreparedStatement stmt = connection.prepareStatement(sql);
+	
+		stmt.setString(1, post.getTitle());
+		stmt.setString(2, post.getPreview_article());
+		stmt.setString(3, post.getArticle());
+		stmt.setDate(4, post.getDatePublication());
+		stmt.setInt(5, post.getUserId());
+		stmt.setInt(6, postId);
+
+		return stmt.execute();
 		
-		Connection connection;
-		try {
-			connection = ConnectionFactory.getConnection();
-		} catch (SQLException e1) {
-			return false;
-		}
+	}
+			
+	public boolean hasTitile(String title, Connection connection) throws SQLException {
+		String sql = "SELECT id FROM post WHERE title = ? LIMIT 1";
 
 		PreparedStatement stmt = connection.prepareStatement(sql);
-
 		stmt.setString(1, title);
+
 		ResultSet rs = stmt.executeQuery();
 		
-		return rs.first();
-			
-	}
-	
-	public List<Post> getListPost() {
-		String sql = "SELECT * FROM post ORDER BY id DESC LIMIT 10";
-		
-		Connection connection = null;
-		try {
-			connection = ConnectionFactory.getConnection();
-		} catch (SQLException e1) {
-			return null;
-		}
-
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
-			
-			ResultSet rs = stmt.executeQuery();
-
-			List<Post> posts = new ArrayList<Post>();
-			
-			while(rs.next()) {
-				Post post = new Post();
-				post.setId(rs.getInt("id"));
-				post.setTitle(rs.getString("title"));
-				post.setPreview_article(rs.getString("preview_article"));
-				post.setArticle(rs.getString("article"));
-				post.setDatePublication(rs.getDate("date_publication"));
-				post.setUserId(rs.getInt("user_id"));
-				
-				posts.add(post);
-			}
-			
-			return posts;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	public Post getPost(String title) {
-		String sql = "SELECT * FROM post WHERE title = ?";
-		
-		Connection connection;
-		try {
-			connection = ConnectionFactory.getConnection();
-		} catch (SQLException e1) {
-			return null;
-		}
-
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
-			
-			stmt.setString(1, title);
-
-			ResultSet rs = stmt.executeQuery();
-			
-			Post post = null;
-			
-			if(rs.next()) {
-				post = new Post();
-				
-				post.setId(rs.getInt("id"));
-				post.setTitle(rs.getString("title"));
-				post.setPreview_article(rs.getString("preview_article"));
-				post.setArticle(rs.getString("article"));
-				post.setDatePublication(rs.getDate("date_publication"));
-				post.setUserId(rs.getInt("user_id"));
-			}
-			
-			return post;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-	
-	public boolean deleteById(int id) {
-		String sql = "DELETE FROM post WHERE id = ? ";
-		
-		Connection connection;
-		try {
-			connection = ConnectionFactory.getConnection();
-		} catch (SQLException e1) {
-			return false;
-		}
-
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
-
-			stmt.setInt(1, id);
-			
-			int rs = stmt.executeUpdate();
-
-			return rs > 0;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		if (rs != null)
+			return rs.first();
 		
 		return false;
 	}
-	
-	public boolean deleteByIdWithComment(int id) {
-		String sql = "DELETE post, comment FROM post "+
-				  "INNER JOIN comment ON post.id = ? AND comment.post_id = post.id";
+
+	public Map<Post, User> getListPost(int index, int max, Connection connection) throws SQLException {
+		String sql = "SELECT post.id, post.title, post.preview_article, post.date_publication, post.user_id, "+ 
+					"user.first_name, user.last_name, user.email "+
+					"FROM post INNER JOIN user ON post.user_id = user.id ORDER BY id DESC LIMIT ?, ? ";
 		
-		Connection connection = null;
-		try {
-			connection = ConnectionFactory.getConnection();
-		} catch (SQLException e1) {
-			return false;
+		PreparedStatement stmt = connection.prepareStatement(sql);
+			
+		stmt.setInt(1, index);
+		stmt.setInt(2, max);
+
+		ResultSet rs = stmt.executeQuery();
+		
+		Map<Post, User> listPost = new LinkedHashMap<Post, User>();
+
+		while(rs.next()) {
+			Post post = new Post();
+			User user = new User();
+			
+			post.setId(rs.getInt("id"));
+			post.setTitle(rs.getString("title"));
+			post.setPreview_article(rs.getString("preview_article"));
+			post.setDatePublication(rs.getDate("date_publication"));
+			post.setUserId(rs.getInt("user_id"));
+			
+			user.setFirst_name(rs.getString("first_name"));
+			user.setLast_name(rs.getString("last_name"));
+			user.setEmail(rs.getString("email"));
+			
+			listPost.put(post, user);
 		}
 
-		try (PreparedStatement stmt = connection.prepareStatement(sql)){
-
-			stmt.setInt(1, id);
-			
-			int rs = stmt.executeUpdate();
-
-			return rs > 0;
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return false;
+		return listPost;
 	}
+	
+	public Map<Post, User> getPost(String title, Connection connection) throws SQLException {
+		String sql = "SELECT post.*, user.* "+
+					"FROM post INNER JOIN user ON post.title = ? LIMIT 1 ";
+		
+		PreparedStatement stmt = connection.prepareStatement(sql);
+			
+		stmt.setString(1, title);
+
+		ResultSet rs = stmt.executeQuery();
+		
+		Map<Post, User> listPost = new LinkedHashMap<Post, User>();
+
+		while(rs.next()) {
+			Post post = new Post();
+			User user = new User();
+			
+			post.setId(rs.getInt("id"));
+			post.setTitle(rs.getString("title"));
+			post.setPreview_article(rs.getString("preview_article"));
+			post.setArticle(rs.getString("article"));
+			post.setDatePublication(rs.getDate("date_publication"));
+			post.setUserId(rs.getInt("user_id"));
+			
+			user.setFirst_name(rs.getString("first_name"));
+			user.setLast_name(rs.getString("last_name"));
+			user.setEmail(rs.getString("email"));
+			
+			listPost.put(post, user);
+		}
+
+		return listPost;
+	}
+
+
+	public int getLength(Connection connection) throws SQLException {
+		String sql = "SELECT COUNT(id) FROM post WHERE 1 ";
+	
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		ResultSet rs = stmt.executeQuery();
+		
+		if (rs.next())
+			return rs.getInt("COUNT(id)");
+		
+		return 0;
+
+	}
+
+	public boolean delete(int postId, Connection connection) throws SQLException {
+		String sql = "DELETE post, comment FROM post INNER JOIN comment ON post.id = comment.post_id WHERE post.id = ? ";
+	
+		PreparedStatement stmt = connection.prepareStatement(sql);
+		stmt.setInt(1, postId);
+
+		return stmt.execute();		
+	}
+
 }
